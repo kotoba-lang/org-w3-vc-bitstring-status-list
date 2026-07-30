@@ -100,10 +100,28 @@ integer and a JSON number cannot carry one faithfully.
 ## Test
 
 ```bash
-clojure -M:test          # release deps (git SHAs)
-clojure -M:dev:test      # sibling west checkouts
+clojure -M:test          # JVM, release deps (git SHAs)
+clojure -M:dev:test      # JVM, sibling west checkouts
 clojure -M:lint
+npm install && npm run smoke   # the :cljs branch
 ```
+
+The `:cljs` branch needs its own run, and CI runs both. This library has already
+been bitten by exactly the divergence that makes it necessary:
+`multiformats.core/base64url-decode` returns a byte-array on `:clj` whose bytes
+are **signed**, so the gzip magic `0x8b` arrived as `-117` and a perfectly good
+member was rejected as "bad magic", while `:cljs` returned unsigned ints and the
+same code was fine.
+
+Because `encodedList` sits inside a **signed** credential, both suites pin the
+*same* literal for the same input — a cross-host invariant that cannot be
+expressed inside one suite, since a host that gzipped differently would still
+pass its own tests while issuing a list the other host's verifier rejects.
+Measured identical on both hosts 2026-07-30.
+
+`@noble/hashes` is declared in `package.json` for the `:cljs` path: requiring
+`multiformats.core` at all pulls it in, even though this library uses only
+`base64url` from it.
 
 ## License
 

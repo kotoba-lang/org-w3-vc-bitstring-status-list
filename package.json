@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "description": "npm dependency of the :cljs path only. multiformats.core reaches for @noble/hashes on :cljs for SHA-256, and requiring the namespace at all pulls it in even though this library uses only base64url from it — so a fresh clone cannot run test/nbb_smoke.cljs without it.",
+  "dependencies": {
+    "@noble/hashes": "2.0.1"
+  },
+  "scripts": {
+    "smoke": "nbb --classpath src:../io-multiformats/src:../org-ietf-deflate/src test/nbb_smoke.cljs"
+  }
+}

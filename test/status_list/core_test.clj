@@ -67,6 +67,22 @@
       (is (< (count encoded) 1000)
           (str "expected a small encodedList, got " (count encoded) " chars")))))
 
+(def cross-host-pinned-encoded-list
+  "The exact `encodedList` for indices #{0 7 8 4095}, pinned identically here and
+  in `test/nbb_smoke.cljs`.
+
+  This is the cross-host invariant, and it cannot be expressed inside one suite:
+  the value sits inside a SIGNED credential, so if :clj and :cljs ever gzip or
+  base64url differently, one host issues a status list the other host's verifier
+  rejects — and both suites would still pass on their own. Two copies of one
+  literal is the cheapest way to make that divergence fail something.
+
+  Measured identical on both hosts 2026-07-30."
+  "uH4sIAAAAAAAA_-3BAQ0AAAgDoNtcm1vDTWA6_FUBAAAAAAAAAAAAAAAAAADghAUtkbYtAEAAAA")
+
+(deftest generate-matches-the-cross-host-pinned-value
+  (is (= cross-host-pinned-encoded-list (sl/generate #{0 7 8 4095}))))
+
 (deftest generate-is-deterministic
   (testing "the same input yields the same encodedList, because this value goes
             inside a signed credential — a gzip MTIME would change the signature
