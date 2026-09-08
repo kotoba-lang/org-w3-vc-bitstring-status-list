@@ -19,7 +19,7 @@
      ;=> {:status 1 :valid? false :purpose \"revocation\" :index 7}
 
    Reference: https://www.w3.org/TR/vc-bitstring-status-list/ §3.1-3.4"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [deflate.core :as deflate]
             [multiformats.core :as mf]))
 
