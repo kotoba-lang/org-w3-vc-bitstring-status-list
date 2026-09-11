@@ -69,7 +69,7 @@
 
 (def cross-host-pinned-encoded-list
   "The exact `encodedList` for indices #{0 7 8 4095}, pinned identically here and
-  in `test/nbb_smoke.cljs`.
+  in `test/nbb_smoke.cljk`.
 
   This is the cross-host invariant, and it cannot be expressed inside one suite:
   the value sits inside a SIGNED credential, so if :clj and :cljs ever gzip or
