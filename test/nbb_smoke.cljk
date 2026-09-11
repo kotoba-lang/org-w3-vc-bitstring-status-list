@@ -76,7 +76,7 @@
          (mapv #(:status (sl/check-status (entry-for %) cred))
                [2 3 6 10 4096])))
 
-;; The cross-host invariant. Pinned identically in test/status_list/core_test.clj:
+;; The cross-host invariant. Pinned identically in test/status_list/core_test.cljk:
 ;; the encodedList sits inside a SIGNED credential, so if the two hosts ever gzip
 ;; or base64url differently, one issues a status list the other's verifier
 ;; rejects — and both suites would still pass on their own.
