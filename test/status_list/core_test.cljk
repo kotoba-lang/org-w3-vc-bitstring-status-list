@@ -1,5 +1,5 @@
 (ns status-list.core-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [deflate.core :as deflate]
             [multiformats.core :as mf]
             [status-list.core :as sl]))
